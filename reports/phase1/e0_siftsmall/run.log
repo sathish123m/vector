@@ -1,0 +1,37 @@
+[phase1] dataset=siftsmall out=results/phase1/e0_siftsmall
+[phase1] M=16 efConstruction=100 efSearch=[16, 32, 64, 128] k=10 metric=l2
+[phase1] loaded base=10,000x128 queries=100 base_mb=4.9
+[phase1] ground truth: shipped shape=[100, 100]
+[phase1] building churnvec HNSW...
+  inserted 2,000/10,000
+  inserted 4,000/10,000
+  inserted 6,000/10,000
+  inserted 8,000/10,000
+  inserted 10,000/10,000
+[phase1] built in 21.41s (peak RSS 47 MB, start 40 MB)
+[phase1] graph: max_level=3 unreachable=0 memory=6.4 MB repair_links=0
+  churnvec ef=  16 recall@10=0.9590 p50=0.295ms p95=0.402ms qps=3212.6
+  churnvec ef=  32 recall@10=0.9900 p50=0.561ms p95=1.192ms qps=1465.4
+  churnvec ef=  64 recall@10=0.9970 p50=0.874ms p95=0.978ms qps=1138.7
+  churnvec ef= 128 recall@10=1.0000 p50=1.620ms p95=2.183ms qps=531.4
+[phase1] building hnswlib...
+  hnswlib built in 1.11s (peak RSS 43 MB)
+  hnswlib  ef=  16 recall@10=0.9620 p50=0.035ms p95=0.051ms qps=25486.1
+  hnswlib  ef=  32 recall@10=0.9910 p50=0.042ms p95=0.056ms qps=23871.4
+  hnswlib  ef=  64 recall@10=0.9970 p50=0.071ms p95=0.097ms qps=13813.8
+  hnswlib  ef= 128 recall@10=1.0000 p50=0.112ms p95=0.140ms qps=9195.9
+
+[phase1] summary
+engine       ef   recall    p50 ms    p95 ms       qps
+churnvec     16   0.9590     0.295     0.402    3212.6
+churnvec     32   0.9900     0.561     1.192    1465.4
+churnvec     64   0.9970     0.874     0.978    1138.7
+churnvec    128   1.0000     1.620     2.183     531.4
+hnswlib      16   0.9620     0.035     0.051   25486.1
+hnswlib      32   0.9910     0.042     0.056   23871.4
+hnswlib      64   0.9970     0.071     0.097   13813.8
+hnswlib     128   1.0000     0.112     0.140    9195.9
+
+[phase1] Week-5 gate at ef=64: custom recall=0.9970 (target 0.90); hnswlib=0.9970; delta=+0.00pp; passed=True
+[phase1] projected 1M build: 0.59h; native-core triggers: none
+[phase1] results: results/phase1/e0_siftsmall/result.json

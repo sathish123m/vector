@@ -1,0 +1,38 @@
+[phase1] dataset=siftsmall out=results/phase1/e0_siftsmall
+[phase1] M=16 efConstruction=100 efSearch=[16, 32, 64, 128] k=10 metric=l2
+[phase1] loaded base=10,000x128 queries=100 base_mb=4.9
+[phase1] ground truth: shipped shape=[100, 100]
+[phase1] building churnvec HNSW...
+  inserted 2,000/10,000
+  inserted 4,000/10,000
+  inserted 6,000/10,000
+  inserted 8,000/10,000
+  inserted 10,000/10,000
+Matplotlib is building the font cache; this may take a moment.
+[phase1] built in 42.29s (peak RSS 47 MB, start 46 MB)
+[phase1] graph: max_level=3 unreachable=0 memory=6.4 MB repair_links=0
+  churnvec ef=  16 recall@10=0.9790 p50=0.288ms p95=0.457ms qps=3223.9
+  churnvec ef=  32 recall@10=0.9970 p50=0.493ms p95=0.714ms qps=1897.6
+  churnvec ef=  64 recall@10=1.0000 p50=0.849ms p95=0.903ms qps=1192.5
+  churnvec ef= 128 recall@10=1.0000 p50=1.765ms p95=2.423ms qps=535.4
+[phase1] building hnswlib...
+  hnswlib built in 1.16s (peak RSS 39 MB)
+  hnswlib  ef=  16 recall@10=0.9620 p50=0.028ms p95=0.038ms qps=35056.0
+  hnswlib  ef=  32 recall@10=0.9910 p50=0.048ms p95=0.069ms qps=19625.0
+  hnswlib  ef=  64 recall@10=0.9970 p50=0.112ms p95=0.272ms qps=7396.9
+  hnswlib  ef= 128 recall@10=1.0000 p50=0.123ms p95=0.168ms qps=8191.4
+
+[phase1] summary
+engine       ef   recall    p50 ms    p95 ms       qps
+churnvec     16   0.9790     0.288     0.457    3223.9
+churnvec     32   0.9970     0.493     0.714    1897.6
+churnvec     64   1.0000     0.849     0.903    1192.5
+churnvec    128   1.0000     1.765     2.423     535.4
+hnswlib      16   0.9620     0.028     0.038   35056.0
+hnswlib      32   0.9910     0.048     0.069   19625.0
+hnswlib      64   0.9970     0.112     0.272    7396.9
+hnswlib     128   1.0000     0.123     0.168    8191.4
+
+[phase1] Week-5 gate at ef=64: custom recall=1.0000 (target 0.90); hnswlib=0.9970; delta=-0.30pp; passed=True
+[phase1] projected 1M build: 1.17h; native-core triggers: none
+[phase1] results: results/phase1/e0_siftsmall/result.json

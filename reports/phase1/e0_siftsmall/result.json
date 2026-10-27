@@ -1,0 +1,281 @@
+{
+  "run": {
+    "timestamp_utc": "2026-10-27T16:16:58.131704+00:00",
+    "command": "/Users/msk/Documents/vector/.venv/bin/python scripts/run_phase1.py --config configs/experiments/e0_siftsmall.yaml",
+    "python": "3.12.14",
+    "numpy": "2.5.4",
+    "hnswlib": null,
+    "platform": "macOS-15.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "processor": "arm",
+    "cpu_count": 8,
+    "total_ram_gb": 8.0,
+    "git": {
+      "commit": null,
+      "short_commit": null,
+      "dirty": true,
+      "dirty_files": [
+        "?? .gitignore",
+        "?? .python-version",
+        "?? Makefile",
+        "?? README.md",
+        "?? configs/",
+        "?? pyproject.toml",
+        "?? scripts/",
+        "?? src/",
+        "?? tests/",
+        "?? uv.lock"
+      ]
+    },
+    "args": {
+      "config": "configs/experiments/e0_siftsmall.yaml",
+      "dataset": "siftsmall",
+      "data_root": "/Users/msk/Documents/vector/data/raw",
+      "out": "results/phase1/e0_siftsmall",
+      "M": 16,
+      "ef_construction": 100,
+      "ef": [
+        16,
+        32,
+        64,
+        128
+      ],
+      "gate_ef": 64,
+      "k": 10,
+      "gt_k": 100,
+      "queries": null,
+      "base_limit": null,
+      "seed": 42,
+      "selection": "heuristic",
+      "keep_pruned": false,
+      "metric": "l2",
+      "compare_hnswlib": true,
+      "plots": true,
+      "save_index": false,
+      "gt_cache": null,
+      "progress_every": 2000,
+      "parity_tolerance_pp": 2.0,
+      "recall_target": 0.9
+    }
+  },
+  "dataset": {
+    "name": "siftsmall",
+    "n_base": 10000,
+    "n_queries": 100,
+    "dim": 128,
+    "groundtruth_shape": [
+      100,
+      100
+    ],
+    "base_bytes": 5120000,
+    "query_bytes": 51200,
+    "learn_shape": null
+  },
+  "groundtruth": {
+    "source": "shipped",
+    "path": null,
+    "shape": [
+      100,
+      100
+    ]
+  },
+  "params": {
+    "M": 16,
+    "ef_construction": 100,
+    "ef_search": [
+      16,
+      32,
+      64,
+      128
+    ],
+    "gate_ef": 64,
+    "k": 10,
+    "metric": "l2",
+    "selection": "heuristic",
+    "keep_pruned": false,
+    "seed": 42
+  },
+  "build": {
+    "seconds": 21.405587291053962,
+    "rss_start_mb": 40.109375,
+    "rss_peak_mb": 46.640625,
+    "rss_delta_mb": 6.53125,
+    "n_base": 10000,
+    "memory_bytes": 6685056,
+    "memory_mb": 6.3753662109375,
+    "stats": {
+      "size": 10000,
+      "dim": 128,
+      "M": 16,
+      "M0": 32,
+      "ef_construction": 100,
+      "metric": "l2",
+      "selection": "heuristic",
+      "keep_pruned": false,
+      "max_level": 3,
+      "entry_point": 2210,
+      "layer_counts": {
+        "0": 10000,
+        "1": 615,
+        "2": 45,
+        "3": 3
+      },
+      "max_degree0": 32,
+      "max_degree_upper": 16,
+      "reachable": 10000,
+      "unreachable": 0,
+      "memory_bytes": 6685056,
+      "distance_calls": 6802381,
+      "visited_nodes": 6382920,
+      "insert_count": 10000,
+      "repair_links": 0
+    }
+  },
+  "churnvec": [
+    {
+      "engine": "churnvec",
+      "ef": 16,
+      "recall": 0.959,
+      "k": 10,
+      "count": 100,
+      "mean_ms": 0.31127918,
+      "p50_ms": 0.2950625,
+      "p95_ms": 0.40193894999999996,
+      "p99_ms": 0.44672583000000216,
+      "min_ms": 0.250833,
+      "max_ms": 0.865083,
+      "qps": 3212.550225813368
+    },
+    {
+      "engine": "churnvec",
+      "ef": 32,
+      "recall": 0.99,
+      "k": 10,
+      "count": 100,
+      "mean_ms": 0.68238582,
+      "p50_ms": 0.560979,
+      "p95_ms": 1.1917068999999998,
+      "p99_ms": 1.9873090800000133,
+      "min_ms": 0.439708,
+      "max_ms": 4.550625,
+      "qps": 1465.446629591453
+    },
+    {
+      "engine": "churnvec",
+      "ef": 64,
+      "recall": 0.997,
+      "k": 10,
+      "count": 100,
+      "mean_ms": 0.8781879799999999,
+      "p50_ms": 0.874271,
+      "p95_ms": 0.97813125,
+      "p99_ms": 1.0144209200000003,
+      "min_ms": 0.746167,
+      "max_ms": 1.047875,
+      "qps": 1138.7083662885022
+    },
+    {
+      "engine": "churnvec",
+      "ef": 128,
+      "recall": 1.0,
+      "k": 10,
+      "count": 100,
+      "mean_ms": 1.8818275199999996,
+      "p50_ms": 1.6203745,
+      "p95_ms": 2.183006249999999,
+      "p99_ms": 5.594657170000082,
+      "min_ms": 1.350959,
+      "max_ms": 21.652375,
+      "qps": 531.3983292156339
+    }
+  ],
+  "hnswlib": [
+    {
+      "engine": "hnswlib",
+      "ef": 16,
+      "recall": 0.962,
+      "k": 10,
+      "count": 100,
+      "mean_ms": 0.03923712,
+      "p50_ms": 0.03475,
+      "p95_ms": 0.0508622,
+      "p99_ms": 0.1196041700000012,
+      "min_ms": 0.019333,
+      "max_ms": 0.352667,
+      "qps": 25486.070333398577
+    },
+    {
+      "engine": "hnswlib",
+      "ef": 32,
+      "recall": 0.991,
+      "k": 10,
+      "count": 100,
+      "mean_ms": 0.041891189999999995,
+      "p50_ms": 0.0418955,
+      "p95_ms": 0.0556375,
+      "p99_ms": 0.057796160000000006,
+      "min_ms": 0.026458,
+      "max_ms": 0.058208,
+      "qps": 23871.367702851127
+    },
+    {
+      "engine": "hnswlib",
+      "ef": 64,
+      "recall": 0.997,
+      "k": 10,
+      "count": 100,
+      "mean_ms": 0.07239124000000001,
+      "p50_ms": 0.070625,
+      "p95_ms": 0.0968875,
+      "p99_ms": 0.11849525000000027,
+      "min_ms": 0.042875,
+      "max_ms": 0.171584,
+      "qps": 13813.82609277034
+    },
+    {
+      "engine": "hnswlib",
+      "ef": 128,
+      "recall": 1.0,
+      "k": 10,
+      "count": 100,
+      "mean_ms": 0.10874418000000001,
+      "p50_ms": 0.1123335,
+      "p95_ms": 0.1400649,
+      "p99_ms": 0.1473362500000001,
+      "min_ms": 0.064125,
+      "max_ms": 0.16825,
+      "qps": 9195.894437752899
+    }
+  ],
+  "hnswlib_build": {
+    "build_seconds": 1.1050044579897076,
+    "rss_start_mb": 33.28125,
+    "rss_peak_mb": 43.265625,
+    "rss_delta_mb": 9.984375,
+    "index_file_bytes": 6606132,
+    "index_file_mb": 6.300098419189453
+  },
+  "gate": {
+    "ef": 64,
+    "target_recall": 0.9,
+    "custom_recall": 0.997,
+    "hnswlib_recall": 0.997,
+    "recall_pass": true,
+    "delta_pp": 0.0,
+    "parity_tolerance_pp": 2.0,
+    "parity_pass": true,
+    "week5_gate_passed": true
+  },
+  "projection": {
+    "inserts_per_second": 467.1677475618387,
+    "projected_1m_build_hours": 0.5945996469737211,
+    "measured_p50_ms": 0.874271,
+    "native_core_triggered": false,
+    "triggers": [],
+    "note": "1M values are linear projections from this run; query latency at 1M is likely higher because the graph has more layers/nodes."
+  },
+  "plots": [
+    "results/phase1/e0_siftsmall/plots/recall_vs_ef.png",
+    "results/phase1/e0_siftsmall/plots/latency_vs_ef.png"
+  ]
+}
