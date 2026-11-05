@@ -1,0 +1,14 @@
+# Experiment E0: SIFT10K smoke test.
+# Purpose: validate the harness end-to-end before spending time on SIFT100K.
+dataset: siftsmall
+out: results/phase1/e0_siftsmall
+M: 16
+ef_construction: 100
+keep_pruned: false   # hnswlib-style pruning; true fragments SIFT layer 0
+ef: [16, 32, 64, 128]
+gate_ef: 64
+k: 10
+gt_k: 100
+compare_hnswlib: true
+plots: true
+progress_every: 2000

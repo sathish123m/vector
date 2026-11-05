@@ -1,0 +1,15 @@
+# Experiment E1: Week-5 validation gate.
+# SIFT100K prefix of SIFT1M, all 10K queries, exact ground truth recomputed
+# for the 100K snapshot and cached under data/processed/.
+dataset: sift100k
+out: results/phase1/e1_sift100k
+M: 16
+ef_construction: 100
+keep_pruned: false   # hnswlib-style pruning; true fragments SIFT layer 0
+ef: [16, 32, 64, 128, 256]
+gate_ef: 64
+k: 10
+gt_k: 100
+compare_hnswlib: true
+plots: true
+progress_every: 10000

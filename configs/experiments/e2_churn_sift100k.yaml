@@ -1,0 +1,39 @@
+# Experiment E2: SIFT100K churn workload.
+#
+# 2,000 queries keep the four exact-ground-truth recomputations and the
+# per-ef latency sweeps within a practical wall-clock budget on the M1/8 GB
+# reference machine.  Recall is still measured on complete, recomputed
+# ground truth for the current live set; the query count is explicit in every
+# result table rather than implied.
+dataset: sift100k
+queries: 2000
+out: results/phase2/e2_churn_sift100k
+M: 16
+ef_construction: 100
+ef: [32, 64, 128]
+k: 10
+metric: l2
+seed: 42
+flush_threshold: 8192
+gt_chunk: 128
+compact_at_end: true
+compare_hnswlib: true
+plots: true
+stability_queries: 16
+schedule:
+  - name: warm
+    delete_fraction: 0.05
+    update_fraction: 0.05
+    insert_fraction: 0.02
+  - name: steady
+    delete_fraction: 0.05
+    update_fraction: 0.05
+    insert_fraction: 0.02
+  - name: heavy
+    delete_fraction: 0.10
+    update_fraction: 0.10
+    insert_fraction: 0.04
+  - name: stress
+    delete_fraction: 0.20
+    update_fraction: 0.20
+    insert_fraction: 0.08

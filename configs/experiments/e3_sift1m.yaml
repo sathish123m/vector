@@ -1,0 +1,15 @@
+# Experiment E3: SIFT1M static build and query benchmark.
+# Full 1M base; the shipped SIFT ground truth is valid for this snapshot.
+# Intended for a host with at least 24 GB RAM (Oracle Cloud ARM VM).
+dataset: sift1m
+out: results/phase1/e3_sift1m
+M: 16
+ef_construction: 100
+keep_pruned: false
+ef: [32, 64, 128]
+gate_ef: 64
+k: 10
+gt_k: 100
+compare_hnswlib: true
+plots: true
+progress_every: 50000

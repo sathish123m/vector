@@ -1,0 +1,38 @@
+# Experiment E2: SIFT10K-style churn workload with 10K queries.
+#
+# SIFT1M's base and query files are used with a 10K base prefix, so this run
+# has the same 10K independent queries as SIFT1M while staying small enough
+# for exact ground-truth recomputation after every mutation batch.
+dataset: sift1m
+base_limit: 10000
+queries: 10000
+out: results/phase2/e2_churn_sift10k
+M: 16
+ef_construction: 100
+ef: [32, 64, 128]
+k: 10
+metric: l2
+seed: 42
+flush_threshold: 2048
+gt_chunk: 256
+compact_at_end: true
+compare_hnswlib: true
+plots: true
+stability_queries: 32
+schedule:
+  - name: warm
+    delete_fraction: 0.05
+    update_fraction: 0.05
+    insert_fraction: 0.02
+  - name: steady
+    delete_fraction: 0.05
+    update_fraction: 0.05
+    insert_fraction: 0.02
+  - name: heavy
+    delete_fraction: 0.10
+    update_fraction: 0.10
+    insert_fraction: 0.04
+  - name: stress
+    delete_fraction: 0.20
+    update_fraction: 0.20
+    insert_fraction: 0.08
