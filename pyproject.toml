@@ -5,7 +5,7 @@ description = "From-scratch HNSW vector index with deletion, snapshots, churn wo
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 license = { text = "MIT" }
-authors = [{ name = "Sathish (@sathish123m)" }]
+authors = [{ name = "Sathish Kumar Madhavaram (@sathish123m)" }]
 dependencies = [
   "numpy>=1.26",
   "pandas>=2.2",
