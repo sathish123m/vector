@@ -21,7 +21,7 @@ fi
 log "Installing system packages"
 export DEBIAN_FRONTEND=noninteractive
 $SUDO apt-get update -y
-$SUDO apt-get install -y git make build-essential python3-dev python3-venv curl ca-certificates
+$SUDO apt-get install -y git make build-essential python3-dev python3-venv curl ca-certificates tmux rsync
 
 if ! swapon --show | grep -q .; then
   log "Creating ${SWAP_GB} GB swap"
