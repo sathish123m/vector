@@ -85,10 +85,11 @@ no-card equivalent of the Oracle VM.
    make e2-100k
    ```
 
-The Oracle bootstrap script is distro-agnostic Ubuntu setup and works here.
-16 GB is enough for SIFT100K churn; use Kaggle for SIFT1M if memory gets tight.
-Codespaces stops after idle timeout and is not suitable for a permanent public
-API.
+The Ubuntu bootstrap works unchanged here, including the HTTPS SIFT fallback
+if Codespaces blocks FTP. 16 GB is enough for SIFT100K churn; SIFT1M is close
+to the limit, so prefer Kaggle for `make e3` if the kernel kills the build.
+Codespaces stops after an idle timeout and is not suitable for a permanent
+public API.
 
 ---
 

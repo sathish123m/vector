@@ -59,8 +59,19 @@ cd "$TARGET"
 log "Installing Python dependencies"
 make setup
 
-log "Downloading and verifying SIFT data"
-make data
+log "Preparing SIFT data"
+if [[ -f data/raw/sift/sift_base.fvecs ]]; then
+  log "SIFT data already present"
+elif ! make data; then
+  log "FTP download failed; using the ann-benchmarks HTTPS mirror"
+  HDF5="$TARGET/sift-128-euclidean.hdf5"
+  curl -fL --retry 3 --retry-delay 2 --connect-timeout 20 \
+    -o "$HDF5" https://ann-benchmarks.com/sift-128-euclidean.hdf5
+  uv pip install h5py
+  .venv/bin/python scripts/prepare_sift_hdf5.py \
+    "$HDF5" --out data/raw/sift --siftsmall
+  rm -f "$HDF5"
+fi
 
 log "Running the test suite"
 make test
