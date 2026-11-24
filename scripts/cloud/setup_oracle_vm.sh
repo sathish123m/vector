@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# One-shot bootstrap for an Oracle Cloud Always Free ARM VM (Ubuntu 24.04).
+# One-shot bootstrap for an Ubuntu benchmark host.
+# Works on Oracle Cloud, GitHub Codespaces, and other Ubuntu VMs/containers.
 # Safe to re-run: it updates the clone and re-checks the environment.
 set -euo pipefail
 
@@ -8,9 +9,10 @@ SWAP_GB="${SWAP_GB:-8}"
 TARGET="${TARGET:-$HOME/churnvec}"
 
 log() { printf '\n\033[1;36m[churnvec]\033[0m %s\n' "$*"; }
+warn() { printf '\n\033[1;33m[churnvec:warn]\033[0m %s\n' "$*" >&2; }
 die() { printf '\n\033[1;31m[churnvec:error]\033[0m %s\n' "$*" >&2; exit 1; }
 
-[[ "$(uname -s)" == "Linux" ]] || die "This script targets Linux (Ubuntu on Oracle Cloud)."
+[[ "$(uname -s)" == "Linux" ]] || die "This script targets Ubuntu Linux hosts (Oracle, Codespaces, or another VM)."
 
 if [[ $EUID -eq 0 ]]; then
   SUDO=""
@@ -23,16 +25,34 @@ export DEBIAN_FRONTEND=noninteractive
 $SUDO apt-get update -y
 $SUDO apt-get install -y git make build-essential python3-dev python3-venv curl ca-certificates tmux rsync
 
-if ! swapon --show | grep -q .; then
-  log "Creating ${SWAP_GB} GB swap"
-  $SUDO fallocate -l "${SWAP_GB}G" /swapfile 2>/dev/null \
-    || $SUDO dd if=/dev/zero of=/swapfile bs=1M count=$((SWAP_GB * 1024)) status=none
-  $SUDO chmod 600 /swapfile
-  $SUDO mkswap /swapfile >/dev/null
-  $SUDO swapon /swapfile
-  grep -q '^/swapfile ' /etc/fstab || echo '/swapfile none swap sw 0 0' | $SUDO tee -a /etc/fstab >/dev/null
-else
+swap_active() {
+  swapon --show 2>/dev/null | grep -q .
+}
+
+if swap_active; then
   log "Swap already active"
+else
+  log "Creating ${SWAP_GB} GB swap"
+  if ! $SUDO fallocate -l "${SWAP_GB}G" /swapfile 2>/dev/null; then
+    $SUDO dd if=/dev/zero of=/swapfile bs=1M count=$((SWAP_GB * 1024)) status=none \
+      || { warn "Could not create a swap file; continuing without swap"; $SUDO rm -f /swapfile; }
+  fi
+  if [[ -f /swapfile ]]; then
+    $SUDO chmod 600 /swapfile
+    if ! $SUDO mkswap /swapfile >/dev/null 2>&1; then
+      warn "mkswap failed; continuing without swap"
+      $SUDO rm -f /swapfile
+      $SUDO sed -i '\#^/swapfile #d' /etc/fstab 2>/dev/null || true
+    elif ! $SUDO swapon /swapfile 2>/dev/null; then
+      # Containers (including GitHub Codespaces) usually lack CAP_SYS_ADMIN.
+      warn "Swap is not permitted on this host; continuing without it"
+      $SUDO rm -f /swapfile
+      $SUDO sed -i '\#^/swapfile #d' /etc/fstab 2>/dev/null || true
+    else
+      grep -q '^/swapfile ' /etc/fstab \
+        || echo '/swapfile none swap sw 0 0' | $SUDO tee -a /etc/fstab >/dev/null
+    fi
+  fi
 fi
 
 if ! command -v uv >/dev/null 2>&1; then
