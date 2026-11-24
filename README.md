@@ -80,8 +80,8 @@ make test       # 100 tests (dataset tests skip if data is absent)
 make e0         # SIFT10K smoke benchmark
 make e1         # SIFT100K Week-5 gate
 make e2         # SIFT10K churn workload + compaction
-make e2-100k    # SIFT100K churn config (needs a host with free memory)
-make e3         # SIFT1M static benchmark (needs a 24 GB host)
+make e2-100k    # SIFT100K churn config (needs a high-memory host)
+make e3         # SIFT1M static benchmark (needs a high-memory host)
 ```
 
 Or run the harness directly:
@@ -102,8 +102,12 @@ install’s `.pth` file hidden.
 ### Cloud setup
 
 The heavy SIFT100K churn and SIFT1M runs need more RAM than the reference
-laptop provides. [`docs/cloud.md`](docs/cloud.md) contains a one-command
-Oracle Cloud Always Free bootstrap for a 24 GB ARM VM.
+laptop provides. [`docs/cloud.md`](docs/cloud.md) covers the no-card options
+and Oracle: a Kaggle notebook (about 30 GB RAM, recommended for the heavy
+runs), GitHub Codespaces for a full terminal, Azure for Students if you have
+an academic email, and an Oracle Cloud Always Free ARM VM for a persistent
+24 GB server. The Kaggle path is
+[`notebooks/kaggle_benchmarks.ipynb`](notebooks/kaggle_benchmarks.ipynb).
 
 ### Churn API
 
@@ -132,6 +136,7 @@ restored = ChurnIndex.load("path/to/index")
 src/churnvec/core/      distance, graph, HNSW, brute force, segments, churn
 src/churnvec/bench/     dataset readers, exact search helpers, metrics
 scripts/                data download, phase-1 and churn benchmarks
+notebooks/              ready-to-run Kaggle notebook for the heavy runs
 tests/                  unit, property, integration, concurrency
 configs/experiments/    e0_siftsmall, e1_sift100k, e2_churn_*
 docs/adr/               architecture decision records

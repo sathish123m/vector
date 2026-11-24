@@ -27,8 +27,8 @@ fetch() {
     return
   fi
   echo "[data] downloading $name"
-  curl --fail --location --retry 3 --retry-delay 2 --continue-at - \
-    --output "$path" "$FTP/$name"
+  curl --fail --location --retry 3 --retry-delay 2 --connect-timeout 20 \
+    --continue-at - --output "$path" "$FTP/$name"
   local actual
   actual="$(md5_of "$path")"
   if [[ "$actual" != "$expected" ]]; then
